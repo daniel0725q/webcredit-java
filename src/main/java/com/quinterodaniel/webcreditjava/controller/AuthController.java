@@ -21,7 +21,7 @@ public class AuthController {
     }
 
     // handler method to handle user registration form submit request
-    @PostMapping("/register/save")
+    @PostMapping("/register")
     public ResponseEntity registration(@RequestBody UserDto userDto) throws Exception {
         User existingUser = userService.findUserByEmail(userDto.getEmail());
 

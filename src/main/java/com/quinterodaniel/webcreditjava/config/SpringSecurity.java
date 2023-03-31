@@ -48,8 +48,8 @@ public class SpringSecurity {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .requestMatchers("/register/**").permitAll()
-                .requestMatchers("/authenticate").permitAll()
+                .requestMatchers("/register").permitAll()
+                .requestMatchers("/login").permitAll()
                 .requestMatchers("/index").permitAll()
                 .requestMatchers("/users").hasRole("ADMIN")
                 .anyRequest().authenticated();
