@@ -26,6 +26,9 @@ public class Simulation {
     @Column(nullable = false)
     private Integer productType;
 
+    @Column(nullable = false)
+    private Boolean isLoan;
+
     @OneToMany(mappedBy="simulation")
     private List<Quota> paymentPlan;
 }

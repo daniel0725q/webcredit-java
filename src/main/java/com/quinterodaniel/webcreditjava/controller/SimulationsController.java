@@ -2,7 +2,8 @@ package com.quinterodaniel.webcreditjava.controller;
 
 import com.quinterodaniel.webcreditjava.dto.SimulationDTO;
 import com.quinterodaniel.webcreditjava.model.request.SimulationParams;
-import com.quinterodaniel.webcreditjava.service.impl.SimulationServiceImpl;
+import com.quinterodaniel.webcreditjava.service.SimulationService;
+import com.quinterodaniel.webcreditjava.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -10,18 +11,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/simulations")
 public class SimulationsController {
 
     @Autowired
-    private SimulationServiceImpl simulationService;
+    private SimulationService simulationService;
 
     @PostMapping
     @RequestMapping("/generate")
-    public ResponseEntity generate(@RequestBody SimulationParams params) {
-        var simulation = simulationService.generate(new BigDecimal(params.getValue()), params.getTimeLimit(), 1);
+    public ResponseEntity generate(@RequestBody SimulationParams params) throws Exception {
+        var simulation = simulationService.generate(new BigDecimal(params.getValue()), params.getTimeLimit(), params.getProductType());
 
         return ResponseEntity.ok(simulation);
     }
@@ -43,7 +45,13 @@ public class SimulationsController {
     @GetMapping
     @RequestMapping("/get/{id}")
     public ResponseEntity getSimulations(Authentication authentication, @PathVariable("id") String id) throws Exception {
-        return ResponseEntity.ok(simulationService.getById(Long.valueOf(id), authentication.getName()));
+        var simulation = simulationService.getById(Long.valueOf(id), authentication.getName());
+        var paymentPlan = simulation.getPaymentPlan();
+        var sorted = paymentPlan.stream().sorted().collect(Collectors.toList());
+        simulation.setPaymentPlan(sorted);
+
+
+        return ResponseEntity.ok(simulation);
     }
 
     @GetMapping

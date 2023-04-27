@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name="quotas")
-public class Quota {
+public class Quota implements Comparable<Quota> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -38,9 +38,21 @@ public class Quota {
     @Column(nullable = false)
     private BigDecimal paidAmount;
 
+    @Column(nullable = false)
+    private BigDecimal value;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="simulation_id", nullable=false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Simulation simulation;
+
+    @Override
+    public int compareTo(Quota o) {
+        if (this.quotaNumber < o.quotaNumber)
+            return -1;
+        else if (this.quotaNumber > o.quotaNumber)
+            return 1;
+        return 0;
+    }
 }

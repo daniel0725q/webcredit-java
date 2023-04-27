@@ -9,5 +9,5 @@ public class SimulationParams {
 
     private int timeLimit;
 
-    private ProductTypeEnum productType;
+    private int productType;
 }

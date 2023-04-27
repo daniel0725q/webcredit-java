@@ -16,4 +16,6 @@ public class QuotaDTO {
     private int quotaNumber;
 
     private BigDecimal remainingValue;
+
+    private BigDecimal value;
 }
