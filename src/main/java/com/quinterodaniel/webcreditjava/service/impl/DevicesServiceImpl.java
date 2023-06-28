@@ -78,6 +78,7 @@ public class DevicesServiceImpl {
         Date sqlTomorrow = new Date(cal.getTimeInMillis());
 
         device.setLendUntil(sqlTomorrow);
+        device.setAvailable(Boolean.FALSE);
         user.setDevice(device);
         deviceRepository.save(device);
         userRepository.save(user);
@@ -89,6 +90,7 @@ public class DevicesServiceImpl {
             throw new Exception("Device does not exist");
         }
         var device = deviceOptional.get();
+        device.setAvailable(Boolean.TRUE);
         var user = device.getUser();
         user.setDevice(null);
         device.setUser(null);

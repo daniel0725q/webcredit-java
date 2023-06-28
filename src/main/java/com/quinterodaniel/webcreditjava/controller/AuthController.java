@@ -3,11 +3,10 @@ package com.quinterodaniel.webcreditjava.controller;
 import com.quinterodaniel.webcreditjava.dto.UserDto;
 import com.quinterodaniel.webcreditjava.entity.User;
 import com.quinterodaniel.webcreditjava.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +29,13 @@ public class AuthController {
         }
         userService.saveUser(userDto);
         return ResponseEntity.ok("");
+    }
+
+    @GetMapping("/whoami")
+    public ResponseEntity whoAmI(@Autowired Authentication authentication) throws Exception {
+        User existingUser = userService.findUserByEmail(authentication.getName());
+
+        return ResponseEntity.ok(existingUser);
     }
 
     @GetMapping("/users")

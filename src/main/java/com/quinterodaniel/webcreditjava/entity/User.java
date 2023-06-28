@@ -48,6 +48,5 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "device_id", referencedColumnName = "id")
-    @JsonIgnore
     private Device device;
 }
