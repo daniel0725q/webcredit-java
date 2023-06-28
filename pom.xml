@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.quinterodaniel</groupId>
     <artifactId>webcredit-java</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>webcredit-java</name>
     <description>webcredit-java</description>
     <properties>

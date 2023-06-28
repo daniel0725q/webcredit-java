@@ -36,7 +36,8 @@ public class SpringSecurity {
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, UserDetailsService userDetailsService)
             throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
+        return http
+                .getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder())
                 .and()
@@ -45,14 +46,17 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeRequests()
-                .requestMatchers("/register").permitAll()
-                .requestMatchers("/login").permitAll()
-                .requestMatchers("/index").permitAll()
-                .requestMatchers("/users").hasRole("ADMIN")
-                .anyRequest().authenticated();
+        http
+            .csrf()
+            .disable()
+            .cors()
+            .and()
+            .authorizeRequests()
+            .requestMatchers("/register").permitAll()
+            .requestMatchers("/login").permitAll()
+            .requestMatchers("/index").permitAll()
+            .requestMatchers("/users").hasRole("ADMIN")
+            .anyRequest().authenticated();
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -9,6 +9,7 @@ import com.quinterodaniel.webcreditjava.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +35,8 @@ public class UserServiceImpl implements UserService {
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setJoinedOn(Date.valueOf(userDto.getJoinedOn()));
+        user.setCareerId(userDto.getCareerId());
 
         Role role = roleRepository.findByName("ROLE_ADMIN");
         if(role == null){
@@ -60,6 +63,8 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = new UserDto();
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
+        userDto.setJoinedOn(user.getJoinedOn().toString());
+        userDto.setCareerId(user.getCareerId());
         return userDto;
     }
 

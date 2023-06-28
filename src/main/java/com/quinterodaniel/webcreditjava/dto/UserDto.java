@@ -16,4 +16,10 @@ public class UserDto {
 
     @NotEmpty
     private String password;
+
+    @NotEmpty
+    private String joinedOn;
+
+    @NotEmpty
+    private String careerId;
 }

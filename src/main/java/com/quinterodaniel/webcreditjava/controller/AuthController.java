@@ -28,7 +28,6 @@ public class AuthController {
         if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
             throw new Exception("");
         }
-
         userService.saveUser(userDto);
         return ResponseEntity.ok("");
     }
